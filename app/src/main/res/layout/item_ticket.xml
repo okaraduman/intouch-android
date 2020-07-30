@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,20 +8,19 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/detailLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        tools:text="Total Deaths"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
         android:id="@+id/detailValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:autoLink="web"
+        android:background="@drawable/speech_bubble_outcoming"
+        android:lineSpacingExtra="2dp"
+        android:padding="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="1000"
-        android:layout_marginTop="10dp"/>
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_percent="0.8"
+        tools:text="1000" />
 </LinearLayout>

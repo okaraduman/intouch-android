@@ -14,8 +14,9 @@ import com.cascade.intouch.adapter.SummaryAdapter
 import com.cascade.intouch.model.Ticket
 import kotlinx.android.synthetic.main.activity_summary.*
 
-class SummaryActivity : AppCompatActivity(), SearchView.OnQueryTextListener, ItemClickListenerSummary,
-        Observer<Any?> {
+class SummaryActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    ItemClickListenerSummary,
+    Observer<Any?> {
 
     private val liveDataSearchQuery = MutableLiveData<String?>()
     private lateinit var tickets: Array<*>
@@ -29,7 +30,6 @@ class SummaryActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Ite
         tickets = data.second as Array<Ticket>
         title = data.first as String
 
-        searchViewSummary.setOnQueryTextListener(this)
         processData(tickets as Array<Ticket>)
         swipeRefreshSummary.setOnRefreshListener {
             processData(tickets as Array<Ticket>)
@@ -66,8 +66,8 @@ class SummaryActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Ite
         private const val DATA = "data"
 
         fun newIntent(context: Context, data: Pair<String, Array<Ticket>>) =
-                Intent(context, SummaryActivity::class.java).apply {
-                    putExtra(DATA, data)
-                }
+            Intent(context, SummaryActivity::class.java).apply {
+                putExtra(DATA, data)
+            }
     }
 }
