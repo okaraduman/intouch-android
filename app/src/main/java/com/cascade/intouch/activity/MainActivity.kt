@@ -4,13 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.CheckBox
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.children
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.cascade.intouch.R
@@ -25,7 +21,7 @@ import com.cascade.intouch.util.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, ItemClickListener,
-        Observer<Any?> {
+    Observer<Any?> {
     private val liveDataSearchQuery = MutableLiveData<String?>()
     private val liveDataFirm = MutableLiveData<Firm?>()
     private val liveDataSortBy = MutableLiveData<SortBy>().apply {
@@ -37,55 +33,27 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, ItemCl
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        searchView.setOnQueryTextListener(this)
         swipeRefresh.setOnRefreshListener {
             refreshData()
         }
-        /*
-        SortBy.values().forEach {
-            AppCompatRadioButton(this).apply {
-                tag = it
-                text = it.name
-                isChecked = liveDataSortBy.value == it
-            }.let {
-                sortingContent.addView(it)
-            }
-        }*/
 
         Firm.values().forEach {
             AppCompatButton(this).apply {
                 tag = it
                 text = it.name
             }.let {
-                it.setOnClickListener {button ->
+                it.setOnClickListener { button ->
                     liveDataFirm.postValue(button.tag as Firm)
                     refreshData()
-                    val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
+                    val inputManager: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputManager.hideSoftInputFromWindow(
+                        currentFocus?.windowToken,
+                        InputMethodManager.SHOW_FORCED
+                    )
                 }
                 firmList.addView(it)
             }
-        }
-
-        with(searchView) {
-            setOnQueryTextListener(this@MainActivity)
-            setOnSearchClickListener {
-                appBarLayout.setExpanded(false, true)
-            }
-            setOnQueryTextFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    appBarLayout.setExpanded(false, true)
-                }
-            }
-            setOnCloseListener(object : SearchView.OnCloseListener {
-                override fun onClose(): Boolean {
-                    searchView.setOnCloseListener(null)
-                    searchView.isIconified = true
-                    searchView.setOnCloseListener(this)
-                    appBarLayout.setExpanded(true, true)
-                    return true
-                }
-            })
         }
 
         liveDataSearchQuery.observe(this, this)
