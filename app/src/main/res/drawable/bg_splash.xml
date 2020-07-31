@@ -8,7 +8,7 @@
     <item android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_virus"
+            android:src="@drawable/brain"
             android:tint="@android:color/darker_gray" />
     </item>
 </layer-list>
